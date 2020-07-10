@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOfferingTithesTable extends Migration
+class CreatePersonsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateOfferingTithesTable extends Migration
      */
     public function up()
     {
-        Schema::create('offering_tithes', function (Blueprint $table) {
+        Schema::create('persons', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('user_id')->unsigned();
-            $table->integer('church_id')->unsigned();
-            $table->decimal('amount', 8, 2);
-            $table->dateTime('date_paid');
-
+            $table->string('name');
+            $table->integer('council_id');
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ class CreateOfferingTithesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('offering_tithes');
+        Schema::dropIfExists('persons');
     }
 }
