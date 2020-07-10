@@ -76895,7 +76895,7 @@ var AttendanceForm = /*#__PURE__*/function (_Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      name: '',
+      person_name: '',
       attendance_date: '',
       tv_or_internet: '',
       errors: []
@@ -76905,8 +76905,8 @@ var AttendanceForm = /*#__PURE__*/function (_Component) {
     _this.hasErrorFor = _this.hasErrorFor.bind(_assertThisInitialized(_this));
     _this.renderErrorFor = _this.renderErrorFor.bind(_assertThisInitialized(_this));
     var flow_source = {
-      tv: 'TV',
-      online: 'Online'
+      Tv: 'Tv',
+      Online: 'Online'
     };
     return _this;
   }
@@ -76923,13 +76923,12 @@ var AttendanceForm = /*#__PURE__*/function (_Component) {
 
       event.preventDefault();
       var history = this.props.history;
-      var momo_send = {
-        person_name: this.state.name,
+      var attendance = {
+        person_name: this.state.person_name,
         attendance_date: this.state.attendance_date,
-        tv_or_internet: this.state.tv_or_internet,
-        amount: this.state.amount
+        tv_or_internet: this.state.tv_or_internet
       };
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/post_attendance', momo_send).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/post_attendance', attendance).then(function (response) {
         // redirect to the homepage
         history.push('/');
       })["catch"](function (error) {
@@ -76978,7 +76977,7 @@ var AttendanceForm = /*#__PURE__*/function (_Component) {
         type: "text",
         className: "form-control ".concat(this.hasErrorFor('person_name') ? 'is-invalid' : ''),
         name: "person_name",
-        value: this.state.mtn_momo_number,
+        value: this.state.person_name,
         onChange: this.handleFieldChange
       }), this.renderErrorFor('person_name')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "form-group"

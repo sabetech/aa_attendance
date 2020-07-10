@@ -6,7 +6,7 @@ class AttendanceForm extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      name: '',
+      person_name: '',
       attendance_date: '',
       tv_or_internet:'',
       errors: []
@@ -17,8 +17,8 @@ class AttendanceForm extends Component {
     this.renderErrorFor = this.renderErrorFor.bind(this)
     
     const flow_source = {
-        tv: 'TV', 
-        online: 'Online'
+        Tv: 'Tv', 
+        Online: 'Online'
     }
 
 }
@@ -34,14 +34,13 @@ class AttendanceForm extends Component {
 
     const { history } = this.props
 
-    const momo_send = {
-      person_name: this.state.name,
+    const attendance = {
+      person_name: this.state.person_name,
       attendance_date: this.state.attendance_date,
       tv_or_internet: this.state.tv_or_internet,
-      amount: this.state.amount
     }
 
-    axios.post('/api/post_attendance', momo_send)
+    axios.post('/api/post_attendance', attendance)
       .then(response => {
         // redirect to the homepage
         history.push('/')
@@ -84,7 +83,7 @@ class AttendanceForm extends Component {
                       type='text'
                       className={`form-control ${this.hasErrorFor('person_name') ? 'is-invalid' : ''}`}
                       name='person_name'
-                      value={this.state.mtn_momo_number}
+                      value={this.state.person_name}
                       onChange={this.handleFieldChange}
                     />
                     {this.renderErrorFor('person_name')}
@@ -106,7 +105,6 @@ class AttendanceForm extends Component {
                         <option value="Online">Online</option>
                     </select>
                   </div>
-                  
                   <button className='btn btn-primary'>Submit</button>
                 </form>
               </div>
