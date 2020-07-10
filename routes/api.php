@@ -20,8 +20,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/offering_tithes', 'OfferingTitheController@index');
+Route::get('/attendance', 'OfferingTitheController@index');
+Route::post('/post_attendance', 'AttendanceController@postAttendance');
+Route::get('/retrieve_attendance', 'AttendanceController@retrieve_attendance');
+
+
 Route::get('/offering_tithes/{id}', 'OfferingTitheController@show');
 Route::post('/offering_tithe', 'OfferingTitheController@store');
+
 
 

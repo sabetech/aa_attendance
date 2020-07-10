@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Header from './Header'
 import OfferingTithesList from './OfferingTithesList'
 import NewTitheOffering from './NewTitheOffering'
+import AttendanceForm from './AttendanceForm'
 
 class App extends Component {
   render () {
@@ -12,7 +13,7 @@ class App extends Component {
         <div>
           <Header />
           <Switch>
-          	<Route exact path='/' component={OfferingTithesList} />
+          	<Route exact path='/' component={AttendanceForm} />
           	<Route path='/create' component={NewTitheOffering} />
           </Switch>
         </div>
