@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { Component } from 'react'
-import Async, { makeAsyncSelect } from 'react-select/async';
+import AsyncSelect from 'react-select/async';
 
 class AttendanceForm extends Component {
   constructor (props) {
@@ -21,13 +21,44 @@ class AttendanceForm extends Component {
         Tv: 'Tv', 
         Online: 'Online'
     }
-
+    
+    this.promiseOptions = inputValue =>
+        new Promise(resolve => {
+            resolve(this.searchForPersons(inputValue));
+        });
+        
 }
+  searchForPersons(person_name){
+    axios.get('/api/getpersons?person_name=' + person_name)
+    .then(response => {
+        return response.data
+    })
+  }
+
+  populatePersons() {
+    axios.get('/api/getpersons')
+            .then(response => {
+                //console.log(response.data)
+                return response.data
+            })
+  }
+
+
+
+  
 
   handleFieldChange (event) {
     this.setState({
       [event.target.name]: event.target.value
     })
+
+    if (event.target.name == 'person_name'){
+        //this.searchForPersons(event.target.value);
+    }
+
+    if (event.target.name == 'inputValue'){
+
+    }
   }
 
   handleCreateNewProject (event) {
@@ -37,7 +68,6 @@ class AttendanceForm extends Component {
 
     const attendance = {
       person_name: this.state.person_name,
-      
       attendance_date: this.state.attendance_date,
       tv_or_internet: this.state.tv_or_internet,
     }
@@ -93,15 +123,23 @@ class AttendanceForm extends Component {
                     {this.renderErrorFor('person_name')}
                   </div>
 
+
+
                   <div className='form-group'>
-                    <pre>Name: "{this.state.inputValue}"</pre>
+                    <label htmlFor='inputValue'>Name: {this.state.inputValue}</label>
                     <AsyncSelect
+                    id='inputValue'
+                    name='inputValue'
                     cacheOptions
-                    loadOptions={loadOptions}
+                    loadOptions={this.promiseOptions}
                     defaultOptions
-                    onInputChange={this.handleInputChange}
+                    onInputChange={this.handleFieldChange}
                     />
                   </div>  
+
+
+
+
 
                   <div className='form-group'>
                     <label htmlFor='attendance_date'>Date</label>

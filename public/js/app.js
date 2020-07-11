@@ -77050,13 +77050,40 @@ var AttendanceForm = /*#__PURE__*/function (_Component) {
       Tv: 'Tv',
       Online: 'Online'
     };
+
+    _this.promiseOptions = function (inputValue) {
+      return new Promise(function (resolve) {
+        resolve(_this.searchForPersons(inputValue));
+      });
+    };
+
     return _this;
   }
 
   _createClass(AttendanceForm, [{
+    key: "searchForPersons",
+    value: function searchForPersons(person_name) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/getpersons?person_name=' + person_name).then(function (response) {
+        return response.data;
+      });
+    }
+  }, {
+    key: "populatePersons",
+    value: function populatePersons() {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/getpersons').then(function (response) {
+        //console.log(response.data)
+        return response.data;
+      });
+    }
+  }, {
     key: "handleFieldChange",
     value: function handleFieldChange(event) {
       this.setState(_defineProperty({}, event.target.name, event.target.value));
+
+      if (event.target.name == 'person_name') {//this.searchForPersons(event.target.value);
+      }
+
+      if (event.target.name == 'inputValue') {}
     }
   }, {
     key: "handleCreateNewProject",
@@ -77124,11 +77151,15 @@ var AttendanceForm = /*#__PURE__*/function (_Component) {
         onChange: this.handleFieldChange
       }), this.renderErrorFor('person_name')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "form-group"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("pre", null, "Name: \"", this.state.inputValue, "\""), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(AsyncSelect, {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+        htmlFor: "inputValue"
+      }, "Name: ", this.state.inputValue), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_select_async__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        id: "inputValue",
+        name: "inputValue",
         cacheOptions: true,
-        loadOptions: loadOptions,
+        loadOptions: this.promiseOptions,
         defaultOptions: true,
-        onInputChange: this.handleInputChange
+        onInputChange: this.handleFieldChange
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "form-group"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {

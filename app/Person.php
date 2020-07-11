@@ -11,9 +11,9 @@ class Person extends Model
 
     public static function search($name){
 
-        $persons_result = Person::where('name', 'LIKE', '%'.$name.'%')->get();
+        $persons_result = Person::where('name', 'LIKE', '%'.$name.'%')->select(['id as value', 'name as label'])->take(20)->get();
 
-        return $persons_result
+        return $persons_result;
 
     }
 }

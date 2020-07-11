@@ -20,6 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('getpersons', 'AttendanceController@searchPerson');
 Route::get('/attendance', 'OfferingTitheController@index');
 Route::post('/post_attendance', 'AttendanceController@postAttendance');
 Route::get('/retrieve_attendance', 'AttendanceController@retrieve_attendance');

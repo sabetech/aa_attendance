@@ -23,9 +23,9 @@ class AttendanceController extends Controller
     public function searchPerson(Request $request){
 
         $name = $request->get('person_name');
-        $person = Person::search($name);
+        $persons = Person::search($name);
 
-        return response()->json($person);
+        return response()->json($persons);
 
     }
 }
