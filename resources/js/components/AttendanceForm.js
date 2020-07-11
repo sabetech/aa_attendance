@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { Component } from 'react'
-import Select from 'react-select';
+import Async, { makeAsyncSelect } from 'react-select/async';
 
 class AttendanceForm extends Component {
   constructor (props) {
@@ -9,6 +9,7 @@ class AttendanceForm extends Component {
       person_name: '',
       attendance_date: '',
       tv_or_internet:'',
+      inputValue:'',
       errors: []
     }
     this.handleFieldChange = this.handleFieldChange.bind(this)
@@ -36,6 +37,7 @@ class AttendanceForm extends Component {
 
     const attendance = {
       person_name: this.state.person_name,
+      
       attendance_date: this.state.attendance_date,
       tv_or_internet: this.state.tv_or_internet,
     }
@@ -56,6 +58,8 @@ class AttendanceForm extends Component {
   hasErrorFor (field) {
     return !!this.state.errors[field]
   }
+
+  //const names = 
 
   renderErrorFor (field) {
     if (this.hasErrorFor(field)) {
@@ -88,6 +92,17 @@ class AttendanceForm extends Component {
                     />
                     {this.renderErrorFor('person_name')}
                   </div>
+
+                  <div className='form-group'>
+                    <pre>Name: "{this.state.inputValue}"</pre>
+                    <AsyncSelect
+                    cacheOptions
+                    loadOptions={loadOptions}
+                    defaultOptions
+                    onInputChange={this.handleInputChange}
+                    />
+                  </div>  
+
                   <div className='form-group'>
                     <label htmlFor='attendance_date'>Date</label>
                     <input
@@ -100,7 +115,7 @@ class AttendanceForm extends Component {
                   </div>
                   <div className='form-group'>
                     <label htmlFor='tv_or_online'>TV or Online</label>
-                    <select value={this.state.value} onChange={this.handleChange} className={`form-control`}>
+                    <select name='tv_or_online' value={this.state.value} onChange={this.handleChange} className={`form-control`}>
                         <option value="Tv">TV</option>
                         <option value="Online">Online</option>
                     </select>
